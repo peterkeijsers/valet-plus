@@ -189,8 +189,8 @@ class Brew
             if ($this->installed($service)) {
                 info('[' . $service . '] Restarting');
 
-                $this->cli->quietly('sudo brew services stop ' . $service);
-                $this->cli->quietly('sudo brew services start ' . $service);
+                $this->cli->quietlyAsUser('brew services stop ' . $service);
+                $this->cli->quietlyAsUser('brew services start ' . $service);
             }
         }
     }
@@ -208,7 +208,7 @@ class Brew
             if ($this->installed($service)) {
                 info('[' . $service . '] Stopping');
 
-                $this->cli->quietly('sudo brew services stop ' . $service);
+                $this->cli->quietlyAsUser('brew services stop ' . $service);
             }
         }
     }
