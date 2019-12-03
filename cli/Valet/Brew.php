@@ -189,8 +189,8 @@ class Brew
             if ($this->installed($service)) {
                 info('[' . $service . '] Restarting');
 
-                $this->cli->quietly('sudo brew services stop ' . $service);
-                $this->cli->quietly('sudo brew services start ' . $service);
+                $this->cli->quietlyAsUser('brew services stop ' . $service);
+                $this->cli->quietlyAsUser('brew services start ' . $service);
             }
         }
     }
@@ -208,21 +208,8 @@ class Brew
             if ($this->installed($service)) {
                 info('[' . $service . '] Stopping');
 
-                $this->cli->quietly('sudo brew services stop ' . $service);
+                $this->cli->quietlyAsUser('brew services stop ' . $service);
             }
         }
-    }
-
-    /**
-     * Checks wether the requested services is running.
-     *
-     * @param $formula
-     * @return bool
-     */
-    function isStartedService($formula)
-    {
-        $info = explode(" ", trim(str_replace($formula, "", $this->cli->runAsUser('brew services list | grep ' . $formula))));
-        $state = array_shift($info);
-        return ($state === 'started');
     }
 }
